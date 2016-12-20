@@ -1,0 +1,55 @@
+﻿@model SoftUniBlog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <p>
+            @Model.Content
+        </p>
+        <small class="author">
+            --author @Model.Author.FullName
+        </small>
+        <footer class="pull-right">
+            @if (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.Name))
+            {
+                @Html.ActionLink("Comment", "CreateComment", "Article", new { @id = Model.Id }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new
+           { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+            }
+            
+            @Html.ActionLink("Back", "Index", "Article", null, new { @class = "btn btn-default btn-xs" })
+        </footer>
+    </article>
+</div>
+
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div class="text-primary">
+            <h3>Comments</h3>
+        </div>
+        @foreach (var comment in Model.Comments)
+        {
+            <article>
+                <p style="font:large italic">
+                    @comment.Author.FullName:
+                </p>
+                <p style="border: 1px; border-style:solid; border-color:#C34113; padding: 5px; border-radius: 10px; background-color:antiquewhite; display:inline-block">
+                    @comment.Text
+                </p>
+            </article>
+        }
+    </div>
+</div>
+
+

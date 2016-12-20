@@ -1,0 +1,29 @@
+﻿@model SoftUniBlog.Models.CommentViewModel
+@{
+    ViewBag.Title = "CreateComment";
+}
+<div class="container">
+    <div class="well">
+        <h2>Create Comment</h2>
+        @using (Html.BeginForm("CreateComment", "Article", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Text, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Text, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    @Html.ActionLink("Cancel", "Details", "Article", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="Create" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
